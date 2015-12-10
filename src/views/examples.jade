@@ -58,11 +58,11 @@ block content
         pre
             | somata = require 'somata'
             | 
-            | publisher_service = new somata.Service 'publisher'
+            | Publisher = new somata.Service 'publisher'
             | 
             | # A function to publish an 'announcement' event with message 'Hey there, world!'
             | sendAnnouncement = ->
-            |     publisher_service.publish 'announcement', 'Hey there, world!'
+            |     Publisher.publish 'announcement', 'Hey there, world!'
             | 
             | # Publish every second
             | setInterval sendAnnouncement, 1000
