@@ -3,7 +3,7 @@ extends base
 block content
     .container
 
-        h3 A simple Somata service with Node.js
+        h2 A simple Somata service with Node.js
 
         p A Somata service exposes methods that can be called by a Somata client elsewhere in your software. Let's make a simple Hello World service that exposes two methods to say hello and goodbye.
         pre
@@ -51,7 +51,7 @@ block content
             | [hello.sayGoodbye] response: Goodbye, world!
 
 
-        h3 Subscribe to a remote event
+        h2 Subscribe to a remote event
 
         p Create a Service that will publish an 'announcement' every second
 
@@ -76,17 +76,35 @@ block content
             | 
             | # Subscribe to an 'announcement' event from the 'publisher' service
             | subscriber_client.on 'publisher', 'announcement', (message) ->
-            |     console.log message
+            |     console.log '[subscriber.onAnnouncement] New message:', message
 
+        p Start the service and client
 
+        pre
+            | $ coffee publisher-service.coffee &
+            | [didBind] Socket mulj67id bound to tcp://0.0.0.0:36206...
+            | Registered service `publisher~ho5xqalh` on tcp://0.0.0.0:36206
+            | 
+            | $ coffee subscriber-client.coffee
+            | [Client.subscribe] publisher~u3sg0zoj : announcement
+            // - TODO: doesn't show stuff in brackets
 
+            | Subscribing <mic9pdgi::publisher:announcementy7wq>
+            | [subscriber.onAnnouncement] New message: Hey there, world!
+            | [subscriber.onAnnouncement] New message: Hey there, world!
+            | [subscriber.onAnnouncement] New message: Hey there, world!
+            | ...
 
-        h3 Connect an API and database server
+        p You can even subscribe to events from the browser with <a href='https://github.com/somata/somata-socketio'>somata-socketio</a>.
+
+        h2 Connect an API and database server
 
         p One Somata service will run the API, another the database. We'll use a Somata client to make database queries from within two different fetch routes. In deployment the API and data services can be run on the same machine or with each on their own specialized hardware. This also allows for nifty patterns such as multiple APIs to balance page rendering load under heavy traffic, with a single monolithic database service.
 
         p First a simple REST API with a few routes built with express.
         // - TODO: link to a fuller polar example: 'For more on an approach to a simple... much TODO about nothing
+
+        // - TODO: Another cool idea is a 'theoretical' Maia implementation that subscribes to incoming temperatures in the engine service, then sends a text with Twilio if the temperature is below a certain threshold. Could get some cross-pollination of marketing
 
         pre
             | somata = require 'somata'
@@ -110,7 +128,7 @@ block content
 
         p A data service with a json database in memory
 
-        h3 Somata across platforms
+        h2 Somata across platforms
 
         p For more examples, see 
             a(href="https://github.com/somata/somata-node/tree/master/examples") https://github.com/somata/somata-node/tree/master/examples
