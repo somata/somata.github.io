@@ -6,6 +6,20 @@ block content
         h3 A simple Somata service
 
         p A Somata service exposes methods that can be called by a Somata client elsewhere in your software. Let's make a simple Hello World service that exposes two methods to say hello and goodbye.
+        pre
+            | somata = require 'somata'
+            | 
+            | # Create a new Somata service named 'hello'
+            | hello_service = new somata.Service 'hello', {
+            | 
+            |     # With a few methods
+            |     sayHello: (name, cb) ->
+            |         cb null, 'Hello, ' + name + '!'
+            | 
+            |     sayGoodbye: (name, cb) ->
+            |         cb null, 'Goodbye, ' + name + '!'
+            | }
+
 
         p Now let's call these functions in order from another piece of code.
 
@@ -15,7 +29,7 @@ block content
             | # Create a new Somata client
             | client = new somata.Client
             | 
-            | # Execute the 'hello' service's `sayHello` method
+            | # Execute the 'hello' service's `sayHello` method with argument 'world'
             | client.remote 'hello', 'sayHello', 'world', (err, hello) ->
             |     console.log '[hello.sayHello] response: ' + hello
             | 
@@ -25,7 +39,16 @@ block content
 
             |         process.exit()
 
-        p
+        p Start the service, then run the client:
+
+        pre
+            | $ coffee hello-service.coffee &
+            | Somata service listening on loclhost:15555...
+            | 
+            | $ coffee hello-client.coffee
+            | Found service hello@localhost:15555
+            | [hello.sayHello] response: Hello, world!
+            | [hello.sayGoodbye] response: Goodbye, world!
 
         h3 Connect an API and database server
 
