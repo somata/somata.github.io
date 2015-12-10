@@ -16,7 +16,7 @@ block content
             | client = new somata.Client
             | 
             | # Execute the 'hello' service's `sayHello` method
-            | client.remote 'hello:forward', 'sayHello', 'world', (err, hello) ->
+            | client.remote 'hello', 'sayHello', 'world', (err, hello) ->
             |     console.log '[hello.sayHello] response: ' + hello
             | 
             |     # ... then execute hello.sayGoodbye('world')
