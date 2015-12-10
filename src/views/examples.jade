@@ -3,7 +3,7 @@ extends base
 block content
     .container
 
-        h3 A simple Somata service
+        h3 A simple Somata service with Node.js
 
         p A Somata service exposes methods that can be called by a Somata client elsewhere in your software. Let's make a simple Hello World service that exposes two methods to say hello and goodbye.
         pre
@@ -50,9 +50,65 @@ block content
             | [hello.sayHello] response: Hello, world!
             | [hello.sayGoodbye] response: Goodbye, world!
 
-        h3 Connect an API and database server
 
         h3 Subscribe to a remote event
+
+        p Create a Service that will publish an 'announcement' every second
+
+        pre
+            | somata = require 'somata'
+            | 
+            | publisher_service = new somata.Service 'publisher'
+            | 
+            | # A function to publish an 'announcement' event with message 'Hey there, world!'
+            | sendAnnouncement = ->
+            |     publisher_service.publish 'announcement', 'Hey there, world!'
+            | 
+            | # Publish every second
+            | setInterval sendAnnouncement, 1000
+
+        p Create a Client that subscribes to the 'announcement' event and logs the message
+
+        pre
+            | somata = require 'somata'
+            | 
+            | subscriber_client = new somata.Client
+            | 
+            | # Subscribe to an 'announcement' event from the 'publisher' service
+            | subscriber_client.on 'publisher', 'announcement', (message) ->
+            |     console.log message
+
+
+
+
+        h3 Connect an API and database server
+
+        p One Somata service will run the API, another the database. We'll use a Somata client to make database queries from within two different fetch routes. In deployment the API and data services can be run on the same machine or with each on their own specialized hardware. This also allows for nifty patterns such as multiple APIs to balance page rendering load under heavy traffic, with a single monolithic database service.
+
+        p First a simple REST API with a few routes built with express.
+        // - TODO: link to a fuller polar example: 'For more on an approach to a simple... much TODO about nothing
+
+        pre
+            | somata = require 'somata'
+            | express = require 'express'
+            | 
+            | # Create a new Somata client, use bindRemote shorthand for cleaner calls
+            | client = new somata.Client
+            | Data = client.bindRemote 'example:data'
+            | 
+            | app = express()
+            | 
+            | # Fetch users with a query from the request
+            | app.get '/users.json', (req, res) ->
+            |     Data 'findUsers', req.query, (err, users) ->
+            |         res.json users
+            | 
+            | # Fetch all messages for a user
+            | app.get '/users/:user_id/messages.json', (req, res) ->
+            |     Data 'findMessages', {user_id: req.params.user_id}, (err, messages) ->
+            |         res.json messages
+
+        p A data service with a json database in memory
 
         h3 Somata across platforms
 
