@@ -53,7 +53,7 @@ block content
 
         h2 Subscribe to a remote event
 
-        p Create a Service that will publish an 'announcement' every second
+        p Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.
 
         pre
             | somata = require 'somata'
@@ -95,7 +95,7 @@ block content
             | [subscriber.onAnnouncement] New message: Hey there, world!
             | ...
 
-        p You can even subscribe to events from the browser with <a href='https://github.com/somata/somata-socketio'>somata-socketio</a>.
+        p You can even subscribe to Services' events from the browser with <a href='https://github.com/somata/somata-socketio'>somata-socketio</a>.
 
         h2 Connect an API and database server
 
