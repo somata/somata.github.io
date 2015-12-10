@@ -7,29 +7,24 @@ block content
 
         p A Somata service exposes methods that can be called by a Somata client elsewhere in your software. Let's make a simple Hello World service that exposes two methods to say hello and goodbye.
 
-        code
-            .block
-                .line somata = require 'somata'
-                .line log = somata.helpers.log
-            .block
-                .line # Create a new Somata client
-                .line hello_client = new somata.Client
-            .block
-                .line # Execute the 'hello' service's `sayHello` method with the argument 'world' ...
-                .line hello_client.remote 'hello:forward', 'sayHello', 'world', (err, hello_response) ->
-                .line    log.s '[hello.sayHello] response: ' + hello_response
-            .block
-                .line # ... then execute hello.sayGoodbye('world')
-                .line hello_client.remote 'hello', 'sayGoodbye', 'world', (err, goodbye_response) ->
-                .line    log.s '[hello.sayGoodbye] response: ' + goodbye_response
-
-                    process.exit()
-
         p Now let's call these functions in order from another piece of code.
 
-        code
-            .block
-                .line hello_client =...
+        pre
+            | somata = require 'somata'
+            | 
+            | # Create a new Somata client
+            | client = new somata.Client
+            | 
+            | # Execute the 'hello' service's `sayHello` method
+            | client.remote 'hello:forward', 'sayHello', 'world', (err, hello) ->
+            |     console.log '[hello.sayHello] response: ' + hello
+            | 
+            |     # ... then execute hello.sayGoodbye('world')
+            |     client.remote 'hello', 'sayGoodbye', 'world', (err, goodbye) ->
+            |         console.log '[hello.sayGoodbye] response: ' + goodbye
+
+            |         process.exit()
+
         p
 
         h3 Connect an API and database server
