@@ -2,4 +2,34 @@ extends base
 
 block content
     .container
-        p Microservices are a good way to do things. Somata is a good way to do these things.
+
+        h3 What is Somata?
+
+        p Somata is a protocol and framework for building software on a network of connected microservices.
+
+        p A Somata service exposes methods and events that can be called or subscribed to from anywhere else in the system.
+
+        p This allows for distributed architectures to create pretty much anything — from a cluster of Node.js servers running pieces of an app backend to a network of home automation devices communicating across languages and platforms.
+
+        h3 Why Somata?
+
+        p Somata helps you build better, simpler software by
+        ul
+            li 'Following repeatable patterns' (more specific way to say this?)
+            li Interfacing simply with specialized parts of your system running on domain-specific languages
+            li Subscribing to events anywhere in your system from anywhere else
+            li Developing asynchronously across a development team by enforcing well-defined interfaces
+            li Exposing well-defined interfaces for simple test coverage and troubleshooting
+
+        h3 How can I use it?
+
+        p Somata has already been used for
+        ul
+            li <strong>Flexible app backends</strong> Decoupling the functionality of a web server into well-defined pieces, allowing you to 'build using repeatable patterns and change pieces of our code very flexibly'
+            li <strong>Occulus Vision</strong> Connecting a camera and gimbal on a raspberry pi to the streaming output from Occulus' gyros, for realistic turret-like vision
+            li <strong>Home Automation</strong> Connecting Smarthings, Hue, and home built devices on a local mesh network
+            li <strong>New Ideas</strong> Somata lets you code homogeneously across languages and platforms. This makes it ideal for distributed and embedded systems where flexibility is paramount.
+
+        p Somata has working implementations for Node.js, Python, Ruby, Go, and Scala. If you would like to contribute to Somata please visit the <a href='https://github.com/somata'>Github</a>. 'We would like to extend the protocol to as many languages as possible.'
+
+        p To get started, <a href='/download'>install</a> Somata and try a simple <a href='/examples'>Example</a>.
