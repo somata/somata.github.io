@@ -39,8 +39,17 @@ button {
   font: inherit;
 }
 
+ul {
+  padding-left: 2em;
+}
+
+pre {
+  padding: 20px;
+  background: #eee;
+}
+
 .container {
-  max-width: 500px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -86,6 +95,10 @@ button {
   padding: 20px calc(20px * 1.25);
   display: block;
   color: #aaa;
+}
+
+code .line {
+  display: block;
 }
 
 #content {
