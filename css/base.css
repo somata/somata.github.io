@@ -10,7 +10,6 @@
 
 body {
   font: 15px/1.5em "Helvetica Neue", sans-serif;
-  background: #f5f5f5;
 }
 
 a {
@@ -39,8 +38,17 @@ button {
   font: inherit;
 }
 
+ul {
+  padding-left: 2em;
+}
+
+pre {
+  padding: 20px;
+  background: #f5f5f5;
+}
+
 .container {
-  max-width: 500px;
+  max-width: 700px;
   margin: 0 auto;
 }
 
@@ -69,8 +77,8 @@ button {
 
 #navigation {
   list-style: none;
-  background: #eee;
-  text-align: middle;
+  background: #f5f5f5;
+  text-align: center;
 }
 
 #navigation li {
@@ -89,13 +97,12 @@ button {
 }
 
 #content {
-  padding: 20px 0;
+  padding: calc(20px * 2) 0;
 }
 
 #footer {
-  background: #eee;
   color: #aaa;
-  padding: 20px 0;
+  padding: 0 0 calc(20px * 2);
 }
 
 #footer a {
