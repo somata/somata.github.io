@@ -1,7 +1,7 @@
-<html><head><link rel="stylesheet" href="/css/base.css"/></head><body><div id="header"><div class="container"><img src="/images/logo.png" class="logo"/><h1>somata</h1><h2>the minimal microservice framework</h2></div></div><div id="navigation"><div class="container"><li><a href="/">Intro</a></li><li><a href="/examples" class="selected">Examples</a></li><li><a href="/download">Download</a></li><li><a href="/documentation">Documentation</a></li></div></div><div id="content"><div class="container"><h2>A simple Somata service with Node.js</h2><p>A Somata service exposes methods that can be called by a Somata client elsewhere in your software. Let's make a simple Hello World service that exposes two methods to say hello and goodbye.</p><pre>somata = require 'somata'
+<html><head><link rel="stylesheet" href="/css/base.css"/></head><body><div id="header"><div class="container"><img src="/images/logo.png" class="logo"/><h1>somata</h1><h2>the minimal microservice framework</h2></div></div><div id="navigation"><div class="container"><li><a href="/">Intro</a></li><li><a href="/download">Download</a></li><li><a href="/examples" class="selected">Examples</a></li><li><a href="/documentation">Documentation</a></li></div></div><div id="content"><div class="container"><h2>A simple Somata service with Node.js</h2><p>A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.</p><pre>somata = require 'somata'
  
-# Create a new Somata service named 'hello'
-hello_service = new somata.Service 'hello', {
+# Create a new Somata service named 'speaker'
+SpeakerService = new somata.Service 'speaker', {
  
     # With a few methods
     sayHello: (name, cb) ->
@@ -14,26 +14,26 @@ hello_service = new somata.Service 'hello', {
 # Create a new Somata client
 client = new somata.Client
  
-# Execute the 'hello' service's `sayHello` method with argument 'world'
-client.remote 'hello', 'sayHello', 'world', (err, hello) ->
-    console.log '[hello.sayHello] response: ' + hello
+# Execute the SpeakerService's `sayHello` method with argument 'world'
+client.remote 'speaker', 'sayHello', 'world', (err, hello) ->
+    console.log '[speaker.sayHello] response: ' + hello
  
-    # ... then execute hello.sayGoodbye('world')
-    client.remote 'hello', 'sayGoodbye', 'world', (err, goodbye) ->
-        console.log '[hello.sayGoodbye] response: ' + goodbye
-        process.exit()</pre><p>Start the service, then run the client:</p><pre>$ coffee hello-service.coffee &
-Somata service listening on loclhost:15555...
+    # ... then execute SpeakerService.sayGoodbye('world')
+    client.remote 'speaker', 'sayGoodbye', 'world', (err, goodbye) ->
+        console.log '[speaker.sayGoodbye] response: ' + goodbye
+        process.exit()</pre><p>Start the service, then run the client:</p><pre>$ coffee speaker-service.coffee &
+Somata service listening on localhost:15555...
  
-$ coffee hello-client.coffee
-Found service hello@localhost:15555
-[hello.sayHello] response: Hello, world!
-[hello.sayGoodbye] response: Goodbye, world!</pre><h2>Subscribe to a remote event</h2><p>Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.</p><pre>somata = require 'somata'
+$ coffee speaker-client.coffee
+Found service speaker@localhost:15555
+[speaker.sayHello] response: Hello, world!
+[speaker.sayGoodbye] response: Goodbye, world!</pre><h2>Subscribe to a remote event</h2><p>Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.</p><pre>somata = require 'somata'
  
-publisher_service = new somata.Service 'publisher'
+Publisher = new somata.Service 'publisher'
  
-# A function to publish an 'announcement' event with message 'Hey there, world!'
+# Publish an 'announcement' event with message 'Hey there, world!'
 sendAnnouncement = ->
-    publisher_service.publish 'announcement', 'Hey there, world!'
+    Publisher.publish 'announcement', 'Hey there, world!'
  
 # Publish every second
 setInterval sendAnnouncement, 1000</pre><p>Create a Client that subscribes to the 'announcement' event and logs the message</p><pre>somata = require 'somata'
