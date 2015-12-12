@@ -5,7 +5,7 @@ block content
 
         h2 Dependencies
 
-        p Install ZeroMQ, Node.js and NPM, plus unzip (if you don't have it)
+        p Install ZeroMQ, Node.js and npm, plus unzip (if you don't have it)
 
         pre
             | $ sudo apt-get install nodejs npm libzmq-dev unzip
@@ -20,7 +20,7 @@ block content
             | $ unzip consul_0.6.0_linux_amd64.zip
             | $ sudo mv consul /usr/local/bin
 
-        h2 Somata NPM module
+        h2 Running Consul
 
         p Start the consul agent. For a basic self-sufficient agent.
 
@@ -41,6 +41,15 @@ block content
 
         // - p See 
             a(href="https://github.com/somata/somata-node#installation") https://github.com/somata/somata-node#installation
+
+        p For more information on installing Consul read their <a href='http://www.consul.io/intro/getting-started/install.html'>installation instructions</a>.
+
+        h2 Somata NPM module
+
+        p Install Somata itself with <a href='https://npmjs.org'>npm</a>:
+
+        pre
+            | $ npm install somata
 
         p Now when you start a Somata Service it will register with Consul and be accessible from the rest of your codebase.
 
