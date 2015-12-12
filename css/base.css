@@ -10,7 +10,6 @@
 
 body {
   font: 15px/1.5em "Helvetica Neue", sans-serif;
-  background: #f5f5f5;
 }
 
 a {
@@ -45,7 +44,7 @@ ul {
 
 pre {
   padding: 20px;
-  background: #eee;
+  background: #f5f5f5;
 }
 
 .container {
@@ -78,8 +77,8 @@ pre {
 
 #navigation {
   list-style: none;
-  background: #eee;
-  text-align: middle;
+  background: #f5f5f5;
+  text-align: center;
 }
 
 #navigation li {
@@ -97,18 +96,13 @@ pre {
   color: #aaa;
 }
 
-code .line {
-  display: block;
-}
-
 #content {
-  padding: 20px 0;
+  padding: calc(20px * 2) 0;
 }
 
 #footer {
-  background: #eee;
   color: #aaa;
-  padding: 20px 0;
+  padding: 0 0 calc(20px * 2);
 }
 
 #footer a {
