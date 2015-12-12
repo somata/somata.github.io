@@ -5,12 +5,12 @@ block content
 
         h2 A simple Somata service with Node.js
 
-        p A Somata service exposes methods that can be called by a Somata client elsewhere in your software. Let's make a simple Hello World service that exposes two methods to say hello and goodbye.
+        p A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.
         pre
             | somata = require 'somata'
             | 
-            | # Create a new Somata service named 'hello'
-            | hello_service = new somata.Service 'hello', {
+            | # Create a new Somata service named 'speaker'
+            | SpeakerService = new somata.Service 'speaker', {
             | 
             |     # With a few methods
             |     sayHello: (name, cb) ->
@@ -29,26 +29,26 @@ block content
             | # Create a new Somata client
             | client = new somata.Client
             | 
-            | # Execute the 'hello' service's `sayHello` method with argument 'world'
-            | client.remote 'hello', 'sayHello', 'world', (err, hello) ->
-            |     console.log '[hello.sayHello] response: ' + hello
+            | # Execute the SpeakerService's `sayHello` method with argument 'world'
+            | client.remote 'speaker', 'sayHello', 'world', (err, hello) ->
+            |     console.log '[speaker.sayHello] response: ' + hello
             | 
-            |     # ... then execute hello.sayGoodbye('world')
-            |     client.remote 'hello', 'sayGoodbye', 'world', (err, goodbye) ->
-            |         console.log '[hello.sayGoodbye] response: ' + goodbye
+            |     # ... then execute SpeakerService.sayGoodbye('world')
+            |     client.remote 'speaker', 'sayGoodbye', 'world', (err, goodbye) ->
+            |         console.log '[speaker.sayGoodbye] response: ' + goodbye
 
             |         process.exit()
 
         p Start the service, then run the client:
 
         pre
-            | $ coffee hello-service.coffee &
-            | Somata service listening on loclhost:15555...
+            | $ coffee speaker-service.coffee &
+            | Somata service listening on localhost:15555...
             | 
-            | $ coffee hello-client.coffee
-            | Found service hello@localhost:15555
-            | [hello.sayHello] response: Hello, world!
-            | [hello.sayGoodbye] response: Goodbye, world!
+            | $ coffee speaker-client.coffee
+            | Found service speaker@localhost:15555
+            | [speaker.sayHello] response: Hello, world!
+            | [speaker.sayGoodbye] response: Goodbye, world!
 
 
         h2 Subscribe to a remote event
@@ -60,7 +60,7 @@ block content
             | 
             | Publisher = new somata.Service 'publisher'
             | 
-            | # A function to publish an 'announcement' event with message 'Hey there, world!'
+            | # Publish an 'announcement' event with message 'Hey there, world!'
             | sendAnnouncement = ->
             |     Publisher.publish 'announcement', 'Hey there, world!'
             | 
