@@ -14,7 +14,6 @@ $colors
 
 body
     font: 15px/1.5em "Helvetica Neue", sans-serif
-    background: $colors.lightest_gray
 
 a
     color: $colors.green
@@ -34,7 +33,7 @@ ul
 
 pre
     padding: $padding
-    background: $colors.lighter_gray
+    background: $colors.lightest_gray
 
 .container
     max-width: 700px
@@ -61,8 +60,8 @@ pre
 
 #navigation
     list-style: none
-    background: $colors.lighter_gray
-    text-align: middle
+    background: $colors.lightest_gray
+    text-align: center
 
     li
         display: inline-block
@@ -76,17 +75,13 @@ pre
             color: $colors.green
             font-weight: bold
 
-code
-    .line
-        display: block
-
 #content
-    padding: $padding 0
+    padding: calc($padding * 2) 0
 
 #footer
-    background: $colors.lighter_gray
     color: $colors.light_gray
-    padding: $padding 0
+    padding: 0 0 calc($padding * 2)
 
     a
         color: inherit
+
