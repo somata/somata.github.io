@@ -6,94 +6,30 @@ block content
         h2 A simple Somata service with Node.js
 
         p A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.
-        pre
-            | somata = require 'somata'
-            | 
-            | # Create a new Somata service named 'speaker'
-            | service = new somata.Service 'speaker', {
-            | 
-            |     # With a few methods
-            |     sayHello: (name, cb) ->
-            |         cb null, 'Hello, ' + name + '!'
-            | 
-            |     sayGoodbye: (name, cb) ->
-            |         cb null, 'Goodbye, ' + name + '!'
-            | }
 
+        !=highlight('speaker-service.coffee')
 
         p Now let's call these functions in order from another piece of code.
 
-        pre
-            | somata = require 'somata'
-            | 
-            | # Create a new Somata client
-            | client = new somata.Client
-            | 
-            | # Execute the SpeakerService's `sayHello` method with argument 'world'
-            | client.remote 'speaker', 'sayHello', 'world', (err, hello) ->
-            |     console.log '[speaker.sayHello] response: ' + hello
-            | 
-            |     # ... then execute SpeakerService.sayGoodbye('world')
-            |     client.remote 'speaker', 'sayGoodbye', 'world', (err, goodbye) ->
-            |         console.log '[speaker.sayGoodbye] response: ' + goodbye
-
-            |         process.exit()
+        !=highlight('speaker-client.coffee')
 
         p Start the service, then run the client:
 
-        pre
-            | $ coffee speaker-service.coffee &
-            | Somata service listening on localhost:15555...
-            | 
-            | $ coffee speaker-client.coffee
-            | Found service speaker@localhost:15555
-            | [speaker.sayHello] response: Hello, world!
-            | [speaker.sayGoodbye] response: Goodbye, world!
-
+        !=highlight('run-speaker-example.bash')
 
         h2 Subscribe to a remote event
 
         p Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.
 
-        pre
-            | somata = require 'somata'
-            | 
-            | service = new somata.Service 'publisher'
-            | 
-            | # Publish an 'announcement' event with message 'Hey there, world!'
-            | sendAnnouncement = ->
-            |     service.publish 'announcement', 'Hey there, world!'
-            | 
-            | # Publish every second
-            | setInterval sendAnnouncement, 1000
+        !=highlight('publisher-service.coffee')
 
         p Create a Client that subscribes to the 'announcement' event and logs the message
 
-        pre
-            | somata = require 'somata'
-            | 
-            | subscriber_client = new somata.Client
-            | 
-            | # Subscribe to an 'announcement' event from the 'publisher' service
-            | subscriber_client.on 'publisher', 'announcement', (message) ->
-            |     console.log '[subscriber.onAnnouncement] New message:', message
+        !=highlight('publisher-client.coffee')
 
         p Start the service and client
 
-        pre
-            | $ coffee publisher-service.coffee &
-            | [didBind] Socket mulj67id bound to tcp://0.0.0.0:36206...
-            | Registered service `publisher~ho5xqalh` on tcp://0.0.0.0:36206
-            | 
-            | $ coffee subscriber-client.coffee
-            | [Client.subscribe] publisher~u3sg0zoj : announcement
-            // - TODO: doesn't show stuff in brackets
-
-            | Subscribing <mic9pdgi::publisher:announcementy7wq>
-            | [subscriber.onAnnouncement] New message: Hey there, world!
-            | [subscriber.onAnnouncement] New message: Hey there, world!
-            | [subscriber.onAnnouncement] New message: Hey there, world!
-            | ...
+        !=highlight('run-publisher-example.bash')
 
         p You can even subscribe to Services' events from the browser with <a href='https://github.com/somata/somata-socketio'>somata-socketio</a>.
 
