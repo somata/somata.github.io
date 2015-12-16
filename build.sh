@@ -14,3 +14,6 @@ do
     mkdir -p $(dirname $file)
     curl http://localhost:8888/$file > $file
 done
+
+cat src/static/css/highlight.css >> css/base.css
+

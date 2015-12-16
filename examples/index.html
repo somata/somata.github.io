@@ -1,54 +1,63 @@
-<html><head><title>Somata | The minimal microservice framework</title><meta name="description" content="Somata is a protocol and framework for building software on a network of connected microservices."/><link href="http://somata.github.io/" rel="canonical"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="Prontotype"/><link rel="stylesheet" href="/css/base.css"/><link href="/images/logo.png" rel="shortcut icon" type="image/x-icon"/></head><body><div id="header"><div class="container"><img src="/images/logo.png" class="logo"/><h1>somata</h1><h2>the minimal microservice framework</h2></div></div><div id="navigation"><div class="container"><li><a href="/">Intro</a></li><li><a href="/download">Download</a></li><li><a href="/examples" class="selected">Examples</a></li><li><a href="/documentation">Documentation</a></li><li><a href="https://github.com/somata" target="_newtab">Github</a></li></div></div><div id="content"><div class="container"><h2>A simple Somata service with Node.js</h2><p>A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.</p><pre>somata = require 'somata'
- 
-# Create a new Somata service named 'speaker'
-SpeakerService = new somata.Service 'speaker', {
- 
-    # With a few methods
-    sayHello: (name, cb) ->
-        cb null, 'Hello, ' + name + '!'
- 
-    sayGoodbye: (name, cb) ->
-        cb null, 'Goodbye, ' + name + '!'
-}</pre><p>Now let's call these functions in order from another piece of code.</p><pre>somata = require 'somata'
- 
-# Create a new Somata client
-client = new somata.Client
- 
-# Execute the SpeakerService's `sayHello` method with argument 'world'
-client.remote 'speaker', 'sayHello', 'world', (err, hello) ->
-    console.log '[speaker.sayHello] response: ' + hello
- 
-    # ... then execute SpeakerService.sayGoodbye('world')
-    client.remote 'speaker', 'sayGoodbye', 'world', (err, goodbye) ->
-        console.log '[speaker.sayGoodbye] response: ' + goodbye
-        process.exit()</pre><p>Start the service, then run the client:</p><pre>$ coffee speaker-service.coffee &
+<html><head><title>Somata | The minimal microservice framework</title><meta name="description" content="Somata is a protocol and framework for building software on a network of connected microservices."/><link href="http://somata.github.io/" rel="canonical"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="Prontotype"/><link rel="stylesheet" href="/css/base.css"/><link rel="stylesheet" href="/css/highlight.css"/><link href="/images/logo.png" rel="shortcut icon" type="image/x-icon"/></head><body><div id="header"><div class="container"><img src="/images/logo.png" class="logo"/><h1>somata</h1><h2>the minimal microservice framework</h2></div></div><div id="navigation"><div class="container"><li><a href="/">Intro</a></li><li><a href="/download">Download</a></li><li><a href="/examples" class="selected">Examples</a></li><li><a href="/documentation">Documentation</a></li><li><a href="https://github.com/somata" target="_newtab">Github</a></li></div></div><div id="content"><div class="container"><h2>A simple Somata service with Node.js</h2><p>A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.</p><pre>
+somata = <span class="hljs-built_in">require</span> <span class="hljs-string">'somata'</span>
+
+<span class="hljs-comment"># Create a new Somata service named 'speaker'</span>
+service = <span class="hljs-keyword">new</span> somata.Service <span class="hljs-string">'speaker'</span>, {
+
+    <span class="hljs-comment"># With a few methods</span>
+    sayHello: <span class="hljs-function"><span class="hljs-params">(name, cb)</span> -&gt;</span>
+        cb <span class="hljs-literal">null</span>, <span class="hljs-string">'Hello, '</span> + name + <span class="hljs-string">'!'</span>
+
+    sayGoodbye: <span class="hljs-function"><span class="hljs-params">(name, cb)</span> -&gt;</span>
+        cb <span class="hljs-literal">null</span>, <span class="hljs-string">'Goodbye, '</span> + name + <span class="hljs-string">'!'</span>
+}</pre><p>Now let's call these functions in order from another piece of code.</p><pre>
+somata = <span class="hljs-built_in">require</span> <span class="hljs-string">'somata'</span>
+
+<span class="hljs-comment"># Create a new Somata client</span>
+client = <span class="hljs-keyword">new</span> somata.Client
+
+<span class="hljs-comment"># Execute SpeakerService.sayHello('world') and get the result...</span>
+client.remote <span class="hljs-string">'speaker'</span>, <span class="hljs-string">'sayHello'</span>, <span class="hljs-string">'world'</span>, <span class="hljs-function"><span class="hljs-params">(err, hello)</span> -&gt;</span>
+    <span class="hljs-built_in">console</span>.log <span class="hljs-string">'[speaker.sayHello] response: '</span> + hello
+
+    <span class="hljs-comment"># ... then execute SpeakerService.sayGoodbye('world')</span>
+    client.remote <span class="hljs-string">'speaker'</span>, <span class="hljs-string">'sayGoodbye'</span>, <span class="hljs-string">'world'</span>, <span class="hljs-function"><span class="hljs-params">(err, goodbye)</span> -&gt;</span>
+        <span class="hljs-built_in">console</span>.log <span class="hljs-string">'[speaker.sayGoodbye] response: '</span> + goodbye
+
+        process.exit()</pre><p>Start the service, then run the client:</p><pre>
+$ coffee speaker-service.coffee &amp;
 Somata service listening on localhost:15555...
- 
+
 $ coffee speaker-client.coffee
 Found service speaker@localhost:15555
 [speaker.sayHello] response: Hello, world!
-[speaker.sayGoodbye] response: Goodbye, world!</pre><h2>Subscribe to a remote event</h2><p>Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.</p><pre>somata = require 'somata'
- 
-Publisher = new somata.Service 'publisher'
- 
-# Publish an 'announcement' event with message 'Hey there, world!'
-sendAnnouncement = ->
-    Publisher.publish 'announcement', 'Hey there, world!'
- 
-# Publish every second
-setInterval sendAnnouncement, 1000</pre><p>Create a Client that subscribes to the 'announcement' event and logs the message</p><pre>somata = require 'somata'
- 
-subscriber_client = new somata.Client
- 
-# Subscribe to an 'announcement' event from the 'publisher' service
-subscriber_client.on 'publisher', 'announcement', (message) ->
-    console.log '[subscriber.onAnnouncement] New message:', message</pre><p>Start the service and client</p><pre>$ coffee publisher-service.coffee &
+[speaker.sayGoodbye] response: Goodbye, world!</pre><h2>Subscribe to a remote event</h2><p>Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.</p><pre>
+somata = <span class="hljs-built_in">require</span> <span class="hljs-string">'somata'</span>
+
+<span class="hljs-comment"># Create a service with no methods</span>
+service = <span class="hljs-keyword">new</span> somata.Service <span class="hljs-string">'publisher'</span>, {}
+
+<span class="hljs-comment"># Publish an 'announcement' event with message 'Hey there, world!'</span>
+<span class="hljs-function"><span class="hljs-title">sendAnnouncement</span> = -&gt;</span>
+    service.publish <span class="hljs-string">'announcement'</span>, <span class="hljs-string">'Hey there, world!'</span>
+
+<span class="hljs-comment"># Publish every second</span>
+setInterval sendAnnouncement, <span class="hljs-number">1000</span></pre><p>Create a Client that subscribes to the 'announcement' event and logs the message</p><pre>
+somata = <span class="hljs-built_in">require</span> <span class="hljs-string">'somata'</span>
+
+client = <span class="hljs-keyword">new</span> somata.Client
+
+<span class="hljs-comment"># Subscribe to an 'announcement' event from the 'publisher' service</span>
+client.<span class="hljs-literal">on</span> <span class="hljs-string">'publisher'</span>, <span class="hljs-string">'announcement'</span>, <span class="hljs-function"><span class="hljs-params">(message)</span> -&gt;</span>
+    <span class="hljs-built_in">console</span>.log <span class="hljs-string">'[subscriber.onAnnouncement] New message:'</span>, message</pre><p>Start the service and client</p><pre>
+$ coffee publisher-service.coffee &amp;
 [didBind] Socket mulj67id bound to tcp://0.0.0.0:36206...
 Registered service `publisher~ho5xqalh` on tcp://0.0.0.0:36206
- 
+
 $ coffee subscriber-client.coffee
-[Client.subscribe] publisher~u3sg0zoj : announcement<!-- - TODO: doesn't show stuff in brackets-->
-Subscribing <mic9pdgi::publisher:announcementy7wq>
+[Client.subscribe] publisher~u3sg0zoj : announcement
+
+Subscribing &lt;mic9pdgi::publisher:announcementy7wq&gt;
 [subscriber.onAnnouncement] New message: Hey there, world!
 [subscriber.onAnnouncement] New message: Hey there, world!
 [subscriber.onAnnouncement] New message: Hey there, world!
