@@ -10,7 +10,7 @@ block content
             | somata = require 'somata'
             | 
             | # Create a new Somata service named 'speaker'
-            | SpeakerService = new somata.Service 'speaker', {
+            | service = new somata.Service 'speaker', {
             | 
             |     # With a few methods
             |     sayHello: (name, cb) ->
@@ -58,11 +58,11 @@ block content
         pre
             | somata = require 'somata'
             | 
-            | Publisher = new somata.Service 'publisher'
+            | service = new somata.Service 'publisher'
             | 
             | # Publish an 'announcement' event with message 'Hey there, world!'
             | sendAnnouncement = ->
-            |     Publisher.publish 'announcement', 'Hey there, world!'
+            |     service.publish 'announcement', 'Hey there, world!'
             | 
             | # Publish every second
             | setInterval sendAnnouncement, 1000
