@@ -1,13 +1,11 @@
 #header
     .container
-        img.logo(src="/images/logo.png")
-        h1 somata
-        h2 the minimal microservice framework
+        .logo
+            img(src="/images/logo.png")
 
-#navigation
-    .container
-        li: a(href="/", class=selected("home")) Intro
-        li: a(href="/download", class=selected("download")) Download
-        li: a(href="/examples", class=selected("examples")) Examples
-        li: a(href="/documentation", class=selected("documentation")) Documentation
-        li: a(href="https://github.com/somata" target="_newtab") Github
+        #navigation
+            li: a(href="/", class=selected("home")) Intro
+            li: a(href="/download", class=selected("download")) Download
+            li: a(href="/examples", class=selected("examples")) Examples
+            li: a(href="/documentation", class=selected("documentation")) Documentation
+            li: a(href="https://github.com/somata" target="_newtab") Github
