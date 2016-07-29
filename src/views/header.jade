@@ -1,11 +1,10 @@
 #header
     .container
         .logo
-            img(src="/images/logo.png")
+            a(href="/")
+                img(src="/images/logo.png")
 
         #navigation
-            li: a(href="/", class=selected("home")) Intro
             li: a(href="/download", class=selected("download")) Download
             li: a(href="/examples", class=selected("examples")) Examples
-            li: a(href="/documentation", class=selected("documentation")) Documentation
             li: a(href="https://github.com/somata" target="_newtab") Github
