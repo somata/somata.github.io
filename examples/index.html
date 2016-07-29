@@ -1,4 +1,33 @@
-<html><head><title>Somata | The minimal microservice framework</title><meta name="description" content="Somata is a protocol and framework for building software on a network of connected microservices."/><link href="http://somata.github.io/" rel="canonical"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="Prontotype"/><link rel="stylesheet" href="/css/base.css"/><link rel="stylesheet" href="/css/highlight.css"/><link href="/images/logo.png" rel="shortcut icon" type="image/x-icon"/></head><body><div id="header"><div class="container"><img src="/images/logo.png" class="logo"/><h1>somata</h1><h2>the minimal microservice framework</h2></div></div><div id="navigation"><div class="container"><li><a href="/">Intro</a></li><li><a href="/download">Download</a></li><li><a href="/examples" class="selected">Examples</a></li><li><a href="/documentation">Documentation</a></li><li><a href="https://github.com/somata" target="_newtab">Github</a></li></div></div><div id="content"><div class="container"><h2>A simple Somata service with Node.js</h2><p>A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.</p><pre>
+<html><head><title>Somata | The minimal microservice framework</title><meta name="description" content="Somata is a protocol and framework for building software on a network of connected microservices."/><link href="http://somata.github.io/" rel="canonical"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="author" content="Prontotype"/><link rel="stylesheet" href="/css/base.css"/><link rel="stylesheet" href="/css/highlight.css"/><link href="/images/favicon.png" rel="shortcut icon" type="image/x-icon"/></head><body><div id="header"><div class="container"><div class="logo"><a href="/"><img src="/images/logo.png"/></a></div><div id="navigation"><li><a href="/download">Download</a></li><li><a href="/examples" class="selected">Examples</a></li><li><a href="https://github.com/somata" target="_newtab">Github</a></li></div></div></div><div id="content"><div class="container"><h2>A simple Somata service with Node.js</h2><p>A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.</p><pre>
+somata = <span class="hljs-built_in">require</span> <span class="hljs-string">'somata'</span>
+
+<span class="hljs-comment"># Create a new Somata service named 'hello' with a single method 'sayHello'</span>
+
+service = <span class="hljs-keyword">new</span> somata.Service <span class="hljs-string">'hello'</span>, {
+
+    sayHello: <span class="hljs-function"><span class="hljs-params">(name, cb)</span> -&gt;</span>
+        cb <span class="hljs-literal">null</span>, <span class="hljs-string">'Hello, '</span> + name + <span class="hljs-string">'!'</span>
+
+}</pre><pre>
+<span class="hljs-keyword">var</span> somata = <span class="hljs-built_in">require</span>(<span class="hljs-string">'somata'</span>);
+
+<span class="hljs-keyword">var</span> service = <span class="hljs-keyword">new</span> somata.Service(<span class="hljs-string">'hello'</span>, {
+    sayHello: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">name, cb</span>) </span>{
+        <span class="hljs-keyword">return</span> cb(<span class="hljs-literal">null</span>, <span class="hljs-string">'Hello '</span> + name + <span class="hljs-string">'!'</span>);
+    }
+});</pre><pre>
+somata = <span class="hljs-built_in">require</span> <span class="hljs-string">'somata'</span>
+
+client = <span class="hljs-keyword">new</span> somata.Client
+client.remote <span class="hljs-string">'hello'</span>, <span class="hljs-string">'sayHello'</span>, <span class="hljs-string">'Fred'</span>, <span class="hljs-function"><span class="hljs-params">(err, response)</span> -&gt;</span>
+    <span class="hljs-built_in">console</span>.log <span class="hljs-string">'Response: '</span> + response</pre><pre>
+<span class="hljs-keyword">var</span> somata = <span class="hljs-built_in">require</span>(<span class="hljs-string">'somata'</span>);
+
+<span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> somata.Client;
+
+client.remote(<span class="hljs-string">'hello'</span>, <span class="hljs-string">'sayHello'</span>, <span class="hljs-string">'Fred'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">err, response</span>) </span>{
+  <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Response: '</span> + response);
+});</pre><pre>
 somata = <span class="hljs-built_in">require</span> <span class="hljs-string">'somata'</span>
 
 <span class="hljs-comment"># Create a new Somata service named 'speaker'</span>

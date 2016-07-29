@@ -1,5 +1,5 @@
 
-views=( examples download documentation )
+views=( download examples )
 
 curl http://localhost:8888/ > index.html
 for view in "${views[@]}"
@@ -8,7 +8,7 @@ do
     curl http://localhost:8888/$view > $view/index.html
 done
 
-files=( css/base.css images/logo.png )
+files=( css/base.css images/logo.png images/favicon.png )
 for file in "${files[@]}"
 do
     mkdir -p $(dirname $file)
