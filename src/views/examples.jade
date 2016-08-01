@@ -2,75 +2,101 @@ extends base
 
 block content
     .container
+        .examples.coffee
+            h2 A simple Somata service with Node.js
 
-        h2 A simple Somata service with Node.js
+            p A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.
 
-        p A Somata service exposes methods that can be called by a Somata client elsewhere in your code. Let's make a simple SpeakerService that exposes two methods to say hello and goodbye.
+            .code-formatters
+                a.coffee-selector(onClick="chooseFormat('coffee')") CoffeeScript
+                a.js-selector(onClick="chooseFormat('js')") JavaScript
 
-        !=highlight('hello-service.coffee')
-        !=highlight('hello-service.js')
+            .coffee
+                !=highlight('hello-service.coffee')
+            .js
+                !=highlight('hello-service.js')
 
-        !=highlight('hello-client.coffee')
-        !=highlight('hello-client.js')
+            .coffee
+                !=highlight('hello-client.coffee')
+            .js
+                !=highlight('hello-client.js')
 
-        !=highlight('speaker-service.coffee')
+            .coffee
+                !=highlight('speaker-service.coffee')
+            .js
+                !=highlight('speaker-service.js')
 
-        p Now let's call these functions in order from another piece of code.
+            p Now let's call these functions in order from another piece of code.
 
-        !=highlight('speaker-client.coffee')
+            .coffee
+                !=highlight('speaker-client.coffee')
+            .js
+                !=highlight('speaker-client.js')
 
-        p Start the service, then run the client:
+            p Start the service, then run the client:
 
-        !=highlight('run-speaker-example.bash')
+            .coffee
+                !=highlight('run-speaker-example.bash')
+            .js
+                !=highlight('run-speaker-example-js.bash')
 
-        h2 Subscribe to a remote event
+            h2 Subscribe to a remote event
 
-        p Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.
+            p Each Somata service can also publish events. Any client in the 'cluster/system' can then subscribe to these events as you would with any javascript event. Let's create a Service that will publish an 'announcement' with a message every second and print out the message elsewhere by subscribing to the 'announcement' event.
 
-        !=highlight('publisher-service.coffee')
+            .coffee
+                !=highlight('publisher-service.coffee')
+            .js
+                !=highlight('publisher-service.js')
 
-        p Create a Client that subscribes to the 'announcement' event and logs the message
+            p Create a Client that subscribes to the 'announcement' event and logs the message
 
-        !=highlight('publisher-client.coffee')
+            .coffee
+                !=highlight('publisher-client.coffee')
+            .js
+                !=highlight('publisher-client.js')
 
-        p Start the service and client
+            p Start the service and client
 
-        !=highlight('run-publisher-example.bash')
+            .coffee
+                !=highlight('run-publisher-example.bash')
+            .js
+                !=highlight('run-publisher-example-js.bash')
 
-        p You can even subscribe to Services' events from the browser with <a href='https://github.com/somata/somata-socketio'>somata-socketio</a>.
+            p You can even subscribe to Services' events from the browser with <a href='https://github.com/somata/somata-socketio'>somata-socketio</a>.
 
-        //- h2 Connect an API and database server
+            //- h2 Connect an API and database server
 
-        //- p One Somata service will run the API, another the database. We'll use a Somata client to make database queries from within two different fetch routes. In deployment the API and data services can be run on the same machine or with each on their own specialized hardware. This also allows for nifty patterns such as multiple APIs to balance page rendering load under heavy traffic, with a single monolithic database service.
+            //- p One Somata service will run the API, another the database. We'll use a Somata client to make database queries from within two different fetch routes. In deployment the API and data services can be run on the same machine or with each on their own specialized hardware. This also allows for nifty patterns such as multiple APIs to balance page rendering load under heavy traffic, with a single monolithic database service.
 
-        //- p First a simple REST API with a few routes built with express.
-        //- // - TODO: link to a fuller polar example: 'For more on an approach to a simple... much TODO about nothing
+            //- p First a simple REST API with a few routes built with express.
+            //- // - TODO: link to a fuller polar example: 'For more on an approach to a simple... much TODO about nothing
 
-        //- // - TODO: Another cool idea is a 'theoretical' Maia implementation that subscribes to incoming temperatures in the engine service, then sends a text with Twilio if the temperature is below a certain threshold. Could get some cross-pollination of marketing
+            //- // - TODO: Another cool idea is a 'theoretical' Maia implementation that subscribes to incoming temperatures in the engine service, then sends a text with Twilio if the temperature is below a certain threshold. Could get some cross-pollination of marketing
 
-        //- pre
-        //-     | somata = require 'somata'
-        //-     | express = require 'express'
-        //-     | 
-        //-     | # Create a new Somata client, use bindRemote shorthand for cleaner calls
-        //-     | client = new somata.Client
-        //-     | Data = client.bindRemote 'example:data'
-        //-     | 
-        //-     | app = express()
-        //-     | 
-        //-     | # Fetch users with a query from the request
-        //-     | app.get '/users.json', (req, res) ->
-        //-     |     Data 'findUsers', req.query, (err, users) ->
-        //-     |         res.json users
-        //-     | 
-        //-     | # Fetch all messages for a user
-        //-     | app.get '/users/:user_id/messages.json', (req, res) ->
-        //-     |     Data 'findMessages', {user_id: req.params.user_id}, (err, messages) ->
-        //-     |         res.json messages
+            //- pre
+            //-     | somata = require 'somata'
+            //-     | express = require 'express'
+            //-     | 
+            //-     | # Create a new Somata client, use bindRemote shorthand for cleaner calls
+            //-     | client = new somata.Client
+            //-     | Data = client.bindRemote 'example:data'
+            //-     | 
+            //-     | app = express()
+            //-     | 
+            //-     | # Fetch users with a query from the request
+            //-     | app.get '/users.json', (req, res) ->
+            //-     |     Data 'findUsers', req.query, (err, users) ->
+            //-     |         res.json users
+            //-     | 
+            //-     | # Fetch all messages for a user
+            //-     | app.get '/users/:user_id/messages.json', (req, res) ->
+            //-     |     Data 'findMessages', {user_id: req.params.user_id}, (err, messages) ->
+            //-     |         res.json messages
 
-        //- p A data service with a json database in memory
+            //- p A data service with a json database in memory
 
-        //- h2 Somata across platforms
+            //- h2 Somata across platforms
 
         p For more examples, see 
             a(href="https://github.com/somata/somata-node/tree/master/examples") https://github.com/somata/somata-node/tree/master/examples
