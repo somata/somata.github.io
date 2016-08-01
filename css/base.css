@@ -42,7 +42,7 @@ pre {
 }
 
 h2 {
-  margin-top: 44px;
+  margin-top: calc(22px * 2);
 }
 
 h2:first-child {
@@ -71,7 +71,7 @@ pre {
 }
 
 #header {
-  padding: 44px 0 22px;
+  padding: calc(22px * 2) 0 22px;
 }
 
 #header .container {
@@ -129,16 +129,36 @@ pre {
 }
 
 #content {
-  padding: 44px 0;
+  padding: calc(22px * 2) 0;
 }
 
 #footer {
   color: #aaa;
-  padding: 0 0 44px;
+  padding: 0 0 calc(22px * 2);
 }
 
 #footer a {
   color: inherit;
+}
+
+.code-formatters a {
+  margin-right: 22px;
+}
+
+.examples.coffee .coffee-selector {
+  font-weight: bold;
+}
+
+.examples.coffee .js {
+  display: none;
+}
+
+.examples.js .js-selector {
+  font-weight: bold;
+}
+
+.examples.js .coffee {
+  display: none;
 }/*
 
 Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
