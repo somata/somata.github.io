@@ -8,7 +8,7 @@ do
     curl http://localhost:8888/$view > $view/index.html
 done
 
-files=( css/base.css images/logo.png images/favicon.png )
+files=( js/base.js css/base.css images/logo.png images/favicon.png )
 for file in "${files[@]}"
 do
     mkdir -p $(dirname $file)
